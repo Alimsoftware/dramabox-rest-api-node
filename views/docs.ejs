@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 Dramabox API Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .rotate-90 { transform: rotate(90deg); }
+        .chapter-input-row { display: flex; gap: 10px; margin-bottom: 8px; align-items: center; }
+        /* Style agar tombol terlihat disabled saat loading */
+        button:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        /* JSON Syntax Highlighting Styles (VS Code Dark Theme) */
+        pre { outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+        .json-key { color: #9cdcfe; font-weight: bold; }       /* Light Blue */
+        .json-string { color: #ce9178; }     /* Orange/Red */
+        .json-number { color: #b5cea8; }     /* Light Green */
+        .json-boolean { color: #569cd6; }    /* Blue */
+        .json-null { color: #569cd6; }       /* Blue */
+    </style>
+</head>
+
+<body class="bg-black text-white min-h-screen antialiased font-sans selection:bg-blue-500 selection:text-white">
+
+<nav class="sticky top-0 z-50 border-b border-gray-800 bg-black/80 backdrop-blur-lg">
+    <div class="container mx-auto flex h-16 items-center justify-between px-4 max-w-5xl">
+        <h1 class="text-xl font-bold tracking-tight">
+            <i class="fa-solid fa-film text-blue-500 mr-2"></i>Dramabox <span class="text-blue-500">Api</span>
+        </h1>
+
+        <div class="relative">
+            <button id="langDropdownBtn"
+                class="flex h-9 items-center justify-between rounded-md border border-gray-700 hover:border-blue-500 px-3 py-2 text-sm w-[160px] transition-colors">
+                <span id="currentLang">🇮🇩 Indonesia</span>
+                <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+            </button>
+
+            <div id="langMenu"
+                class="hidden absolute right-0 mt-2 w-[180px] rounded-md border border-gray-700 bg-gray-900 shadow-xl z-50 overflow-hidden">
+                <div id="langOptionsContainer"></div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="container max-w-5xl mx-auto px-4 py-12">
+
+    <div class="flex items-center justify-between mb-8 flex-wrap gap-4 border-b border-gray-800 pb-4">
+        <h2 class="text-sm font-bold uppercase tracking-wider text-gray-400 flex items-center gap-2">
+            <i class="fa-solid fa-book-open"></i> Dokumentasi Endpoint
+        </h2>
+
+        <div id="baseUrlBox"
+            class="inline-flex items-center rounded-md border border-blue-500/30 bg-blue-500/10 px-3 py-1.5 text-xs font-mono gap-2 text-blue-400">
+            <span class="h-2 w-2 rounded-full bg-blue-500 animate-pulse"></span>
+            https://dramabox-api-rho.vercel.app
+        </div>
+    </div>
+
+    <p class="text-sm mb-8 text-gray-400">
+        Selamat datang di dokumentasi API Server Dramabox. Klik endpoint di bawah untuk melihat detail dan melakukan <b>Live Test</b>.
+    </p>
+
+    <div id="endpoint-list" class="space-y-4">
+        
+        <div class="rounded-lg border border-gray-800 bg-gray-900 overflow-hidden transition-all hover:border-gray-700">
+            <div class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-800/50 transition" onclick="toggleAccordion('search')">
+                <div class="flex items-center gap-3 overflow-hidden">
+                    <span class="px-2.5 py-0.5 text-[10px] font-bold rounded bg-blue-600/20 text-blue-400 border border-blue-600/30">GET</span>
+                    <h3 class="font-semibold text-sm">Cari Drama</h3>
+                    <code class="font-mono text-gray-500 text-xs hidden sm:block">/api/search</code>
+                </div>
+                <i id="arrow-search" class="fa-solid fa-chevron-right text-gray-500 text-sm transition-transform duration-200"></i>
+            </div>
+            
+            <div id="content-search" class="hidden border-t border-gray-800 bg-black/20 p-4">
+                <p class="mb-3 text-xs text-gray-400">Mencari drama berdasarkan kata kunci.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                    <div class="flex flex-col">
+                        <label class="text-xs text-gray-500 mb-1">keyword</label>
+                        <input type="text" id="input-search-keyword" value="ceo" class="bg-gray-800 border border-gray-700 rounded p-2 text-xs text-white focus:border-blue-500 outline-none transition">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-xs text-gray-500 mb-1">page</label>
+                        <input type="number" id="input-search-page" value="1" class="bg-gray-800 border border-gray-700 rounded p-2 text-xs text-white focus:border-blue-500 outline-none transition">
+                    </div>
+                </div>
+                <button id="btn-search" onclick="testGetEndpoint('search', 'https://dramabox-api-rho.vercel.app/api/search', { keyword: document.getElementById('input-search-keyword').value, page: document.getElementById('input-search-page').value })" 
+                    class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-xs font-semibold flex items-center gap-2 transition">
+                    <i class="fa-solid fa-play text-[10px]"></i> Uji Endpoint
+                </button>
+                <div id="result-header-search" class="mt-4 hidden p-3 rounded-t bg-gray-800 border border-gray-700 text-xs"></div>
+                <pre id="result-content-search" class="hidden p-3 rounded-b bg-gray-900 border border-t-0 border-gray-700 text-xs max-h-[300px] overflow-y-auto font-mono whitespace-pre-wrap break-all"></pre>
+            </div>
+        </div>
+
+        <div class="rounded-lg border border-red-900/30 bg-gray-900 overflow-hidden transition-all hover:border-red-900/50 shadow-[0_0_15px_rgba(220,38,38,0.1)]">
+            <div class="flex items-center justify-between p-4 cursor-pointer hover:bg-red-900/10 transition" onclick="toggleAccordion('download-all')">
+                <div class="flex items-center gap-3">
+                    <span class="px-2.5 py-0.5 text-[10px] font-bold rounded bg-red-600/20 text-red-400 border border-red-600/30">GET</span>
+                    <h3 class="font-semibold text-sm text-red-400">Download All Chapters</h3>
+                    <code class="font-mono text-gray-500 text-xs hidden sm:block">/download/:bookId</code>
+                </div>
+                <i id="arrow-download-all" class="fa-solid fa-chevron-right text-gray-500 text-sm transition-transform duration-200"></i>
+            </div>
+            
+            <div id="content-download-all" class="hidden border-t border-gray-800 bg-black/20 p-4">
+                <p class="mb-3 text-xs text-gray-400">Integrasi API untuk menampilkan seluruh episode drama dalam format JSON.</p>
+                <div class="flex flex-col mb-4">
+                    <label class="text-xs text-gray-500 mb-1">bookId</label>
+                    <input type="text" id="input-download-all-bookId" value="41000122558" class="bg-gray-800 border border-gray-700 rounded p-2 text-xs text-white focus:border-blue-500 outline-none">
+                </div>
+                
+                <button id="btn-download-all" onclick="testGetEndpoint('download-all', 'https://dramabox-api-rho.vercel.app/download/:bookId', { bookId: document.getElementById('input-download-all-bookId').value })" 
+                    class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-xs font-semibold flex items-center gap-2 transition">
+                    <i class="fa-solid fa-play text-[10px]"></i> Uji Endpoint
+                </button>
+                
+                <div id="result-header-download-all" class="mt-4 hidden p-3 rounded-t bg-gray-800 border border-gray-700 text-xs"></div>
+                <pre id="result-content-download-all" class="hidden p-3 rounded-b bg-gray-900 border border-t-0 border-gray-700 text-xs max-h-[300px] overflow-y-auto font-mono whitespace-pre-wrap break-all"></pre>
+            </div>
+        </div>
+
+        <div class="rounded-lg border border-yellow-900/30 bg-gray-900 overflow-hidden transition-all hover:border-yellow-700 shadow-[0_0_15px_rgba(234,179,8,0.1)]">
+            <div class="flex items-center justify-between p-4 cursor-pointer hover:bg-yellow-900/10 transition" onclick="toggleAccordion('vip')">
+                <div class="flex items-center gap-3">
+                    <span class="px-2.5 py-0.5 text-[10px] font-bold rounded bg-yellow-600/20 text-yellow-400 border border-yellow-600/30">GET</span>
+                    <h3 class="font-semibold text-sm text-yellow-400">Vip Channel</h3>
+                    <code class="font-mono text-gray-500 text-xs hidden sm:block">/api/vip</code>
+                </div>
+                <i id="arrow-vip" class="fa-solid fa-chevron-right text-gray-500 text-sm transition-transform duration-200"></i>
+            </div>
+            
+            <div id="content-vip" class="hidden border-t border-gray-800 bg-black/20 p-4">
+                <p class="mb-3 text-xs text-gray-400">Mengambil daftar rekomendasi drama dari channel VIP/Theater.</p>
+                <button id="btn-vip" onclick="testGetEndpoint('vip', 'https://dramabox-api-rho.vercel.app/api/vip', {})" 
+                    class="bg-yellow-600 hover:bg-yellow-700 text-black px-4 py-2 rounded text-xs font-bold flex items-center gap-2 transition">
+                    <i class="fa-solid fa-crown text-[10px]"></i> Ambil Data VIP
+                </button>
+                <div id="result-header-vip" class="mt-4 hidden p-3 rounded-t bg-gray-800 border border-gray-700 text-xs"></div>
+                <pre id="result-content-vip" class="hidden p-3 rounded-b bg-gray-900 border border-t-0 border-gray-700 text-xs max-h-[300px] overflow-y-auto font-mono whitespace-pre-wrap break-all"></pre>
+            </div>
+        </div>
+
+        <div class="rounded-lg border border-gray-800 bg-gray-900 overflow-hidden transition-all hover:border-gray-700">
+            <div class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-800/50 transition" onclick="toggleAccordion('home')">
+                <div class="flex items-center gap-3">
+                    <span class="px-2.5 py-0.5 text-[10px] font-bold rounded bg-blue-600/20 text-blue-400 border border-blue-600/30">GET</span>
+                    <h3 class="font-semibold text-sm">Drama Terbaru (Home)</h3>
+                    <code class="font-mono text-gray-500 text-xs hidden sm:block">/api/home</code>
+                </div>
+                <i id="arrow-home" class="fa-solid fa-chevron-right text-gray-500 text-sm transition-transform duration-200"></i>
+            </div>
+            
+            <div id="content-home" class="hidden border-t border-gray-800 bg-black/20 p-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                    <div class="flex flex-col">
+                        <label class="text-xs text-gray-500 mb-1">page</label>
+                        <input type="number" id="input-home-page" value="1" class="bg-gray-800 border border-gray-700 rounded p-2 text-xs text-white focus:border-blue-500 outline-none">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-xs text-gray-500 mb-1">size</label>
+                        <input type="number" id="input-home-size" value="10" class="bg-gray-800 border border-gray-700 rounded p-2 text-xs text-white focus:border-blue-500 outline-none">
+                    </div>
+                </div>
+                <button id="btn-home" onclick="testGetEndpoint('home', 'https://dramabox-api-rho.vercel.app/api/home', { page: document.getElementById('input-home-page').value, size: document.getElementById('input-home-size').value })" 
+                    class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-xs font-semibold flex items-center gap-2 transition">
+                    <i class="fa-solid fa-play text-[10px]"></i> Uji Endpoint
+                </button>
+                <div id="result-header-home" class="mt-4 hidden p-3 rounded-t bg-gray-800 border border-gray-700 text-xs"></div>
+                <pre id="result-content-home" class="hidden p-3 rounded-b bg-gray-900 border border-t-0 border-gray-700 text-xs max-h-[300px] overflow-y-auto font-mono whitespace-pre-wrap break-all"></pre>
+            </div>
+        </div>
+
+        <div class="rounded-lg border border-gray-800 bg-gray-900 overflow-hidden transition-all hover:border-gray-700">
+            <div class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-800/50 transition" onclick="toggleAccordion('detail')">
+                <div class="flex items-center gap-3">
+                    <span class="px-2.5 py-0.5 text-[10px] font-bold rounded bg-blue-600/20 text-blue-400 border border-blue-600/30">GET</span>
+                    <h3 class="font-semibold text-sm">Detail Drama (v2)</h3>
+                </div>
+                <i id="arrow-detail" class="fa-solid fa-chevron-right text-gray-500 text-sm transition-transform duration-200"></i>
+            </div>
+            
+            <div id="content-detail" class="hidden border-t border-gray-800 bg-black/20 p-4">
+                <div class="flex flex-col mb-4">
+                    <label class="text-xs text-gray-500 mb-1">bookId</label>
+                    <input type="text" id="input-detail-bookId" value="41000122558" class="bg-gray-800 border border-gray-700 rounded p-2 text-xs text-white focus:border-blue-500 outline-none">
+                </div>
+                <button id="btn-detail" onclick="testGetEndpoint('detail', 'https://dramabox-api-rho.vercel.app/api/detail/:bookId/v2', { bookId: document.getElementById('input-detail-bookId').value })" 
+                    class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-xs font-semibold flex items-center gap-2 transition">
+                    <i class="fa-solid fa-play text-[10px]"></i> Uji Endpoint
+                </button>
+                <div id="result-header-detail" class="mt-4 hidden p-3 rounded-t bg-gray-800 border border-gray-700 text-xs"></div>
+                <pre id="result-content-detail" class="hidden p-3 rounded-b bg-gray-900 border border-t-0 border-gray-700 text-xs max-h-[300px] overflow-y-auto font-mono whitespace-pre-wrap break-all"></pre>
+            </div>
+        </div>
+
+        <div class="rounded-lg border border-gray-800 bg-gray-900 overflow-hidden transition-all hover:border-gray-700">
+            <div class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-800/50 transition" onclick="toggleAccordion('chapters')">
+                <div class="flex items-center gap-3">
+                    <span class="px-2.5 py-0.5 text-[10px] font-bold rounded bg-blue-600/20 text-blue-400 border border-blue-600/30">GET</span>
+                    <h3 class="font-semibold text-sm">Daftar Chapter</h3>
+                    <code class="font-mono text-gray-500 text-xs hidden sm:block">/api/chapters/:bookId</code>
+                </div>
+                <i id="arrow-chapters" class="fa-solid fa-chevron-right text-gray-500 text-sm transition-transform duration-200"></i>
+            </div>
+            
+            <div id="content-chapters" class="hidden border-t border-gray-800 bg-black/20 p-4">
+                <div class="flex flex-col mb-4">
+                    <label class="text-xs text-gray-500 mb-1">bookId</label>
+                    <input type="text" id="input-chapters-bookId" value="41000122558" class="bg-gray-800 border border-gray-700 rounded p-2 text-xs text-white focus:border-blue-500 outline-none">
+                </div>
+                <button id="btn-chapters" onclick="testGetEndpoint('chapters', 'https://dramabox-api-rho.vercel.app/api/chapters/:bookId', { bookId: document.getElementById('input-chapters-bookId').value })" 
+                    class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-xs font-semibold flex items-center gap-2 transition">
+                    <i class="fa-solid fa-play text-[10px]"></i> Uji Endpoint
+                </button>
+                <div id="result-header-chapters" class="mt-4 hidden p-3 rounded-t bg-gray-800 border border-gray-700 text-xs"></div>
+                <pre id="result-content-chapters" class="hidden p-3 rounded-b bg-gray-900 border border-t-0 border-gray-700 text-xs max-h-[300px] overflow-y-auto font-mono whitespace-pre-wrap break-all"></pre>
+            </div>
+        </div>
+
+        <div class="rounded-lg border border-green-900/30 bg-gray-900 overflow-hidden transition-all hover:border-green-700 shadow-[0_0_15px_rgba(34,197,94,0.1)]">
+            <div class="flex items-center justify-between p-4 cursor-pointer hover:bg-green-900/10 transition" onclick="toggleAccordion('stream')">
+                <div class="flex items-center gap-3">
+                    <span class="px-2.5 py-0.5 text-[10px] font-bold rounded bg-green-600/20 text-green-400 border border-green-600/30">GET</span>
+                    <h3 class="font-semibold text-sm text-green-400">Get Stream Link per Episode</h3>
+                    <code class="font-mono text-gray-500 text-xs hidden sm:block">/api/stream</code>
+                </div>
+                <i id="arrow-stream" class="fa-solid fa-chevron-right text-gray-500 text-sm transition-transform duration-200"></i>
+            </div>
+            
+            <div id="content-stream" class="hidden border-t border-gray-800 bg-black/20 p-4">
+                <p class="mb-3 text-xs text-gray-400">Mendapatkan link streaming (m3u8/mp4) untuk episode tertentu.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                    <div class="flex flex-col">
+                        <label class="text-xs text-gray-500 mb-1">bookId</label>
+                        <input type="text" id="input-stream-bookId" value="41000122558" class="bg-gray-800 border border-gray-700 rounded p-2 text-xs text-white focus:border-green-500 outline-none">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-xs text-gray-500 mb-1">episode</label>
+                        <input type="number" id="input-stream-episode" value="1" class="bg-gray-800 border border-gray-700 rounded p-2 text-xs text-white focus:border-green-500 outline-none">
+                    </div>
+                </div>
+                <button id="btn-stream" onclick="testGetEndpoint('stream', 'https://dramabox-api-rho.vercel.app/api/stream', { bookId: document.getElementById('input-stream-bookId').value, episode: document.getElementById('input-stream-episode').value })" 
+                    class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-xs font-semibold flex items-center gap-2 transition">
+                    <i class="fa-solid fa-play-circle text-[10px]"></i> Get Stream URL
+                </button>
+                <div id="result-header-stream" class="mt-4 hidden p-3 rounded-t bg-gray-800 border border-gray-700 text-xs"></div>
+                <pre id="result-content-stream" class="hidden p-3 rounded-b bg-gray-900 border border-t-0 border-gray-700 text-xs max-h-[300px] overflow-y-auto font-mono whitespace-pre-wrap break-all"></pre>
+            </div>
+        </div>
+
+        <div class="rounded-lg border border-gray-800 bg-gray-900 overflow-hidden transition-all hover:border-gray-700">
+            <div class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-800/50 transition" onclick="toggleAccordion('categories')">
+                <div class="flex items-center gap-3">
+                    <span class="px-2.5 py-0.5 text-[10px] font-bold rounded bg-blue-600/20 text-blue-400 border border-blue-600/30">GET</span>
+                    <h3 class="font-semibold text-sm">Daftar Kategori</h3>
+                    <code class="font-mono text-gray-500 text-xs hidden sm:block">/api/categories</code>
+                </div>
+                <i id="arrow-categories" class="fa-solid fa-chevron-right text-gray-500 text-sm transition-transform duration-200"></i>
+            </div>
+            
+            <div id="content-categories" class="hidden border-t border-gray-800 bg-black/20 p-4">
+                <button id="btn-categories" onclick="testGetEndpoint('categories', 'https://dramabox-api-rho.vercel.app/api/categories', {})" 
+                    class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-xs font-semibold flex items-center gap-2 transition">
+                    <i class="fa-solid fa-play text-[10px]"></i> Uji Endpoint
+                </button>
+                <div id="result-header-categories" class="mt-4 hidden p-3 rounded-t bg-gray-800 border border-gray-700 text-xs"></div>
+                <pre id="result-content-categories" class="hidden p-3 rounded-b bg-gray-900 border border-t-0 border-gray-700 text-xs max-h-[300px] overflow-y-auto font-mono whitespace-pre-wrap break-all"></pre>
+            </div>
+        </div>
+
+        <div class="rounded-lg border border-gray-800 bg-gray-900 overflow-hidden transition-all hover:border-gray-700">
+            <div class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-800/50 transition" onclick="toggleAccordion('category')">
+                <div class="flex items-center gap-3">
+                    <span class="px-2.5 py-0.5 text-[10px] font-bold rounded bg-blue-600/20 text-blue-400 border border-blue-600/30">GET</span>
+                    <h3 class="font-semibold text-sm">Drama per Kategori</h3>
+                    <code class="font-mono text-gray-500 text-xs hidden sm:block">/api/category/:id</code>
+                </div>
+                <i id="arrow-category" class="fa-solid fa-chevron-right text-gray-500 text-sm transition-transform duration-200"></i>
+            </div>
+            
+            <div id="content-category" class="hidden border-t border-gray-800 bg-black/20 p-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                    <div class="flex flex-col">
+                        <label class="text-xs text-gray-500 mb-1">id</label>
+                        <input type="number" id="input-category-id" value="449" class="bg-gray-800 border border-gray-700 rounded p-2 text-xs text-white focus:border-blue-500 outline-none">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-xs text-gray-500 mb-1">page</label>
+                        <input type="number" id="input-category-page" value="1" class="bg-gray-800 border border-gray-700 rounded p-2 text-xs text-white focus:border-blue-500 outline-none">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-xs text-gray-500 mb-1">size</label>
+                        <input type="number" id="input-category-size" value="10" class="bg-gray-800 border border-gray-700 rounded p-2 text-xs text-white focus:border-blue-500 outline-none">
+                    </div>
+                </div>
+                <button id="btn-category" onclick="testGetEndpoint('category', 'https://dramabox-api-rho.vercel.app/api/category/:id', { id: document.getElementById('input-category-id').value, page: document.getElementById('input-category-page').value, size: document.getElementById('input-category-size').value })" 
+                    class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-xs font-semibold flex items-center gap-2 transition">
+                    <i class="fa-solid fa-play text-[10px]"></i> Uji Endpoint
+                </button>
+                <div id="result-header-category" class="mt-4 hidden p-3 rounded-t bg-gray-800 border border-gray-700 text-xs"></div>
+                <pre id="result-content-category" class="hidden p-3 rounded-b bg-gray-900 border border-t-0 border-gray-700 text-xs max-h-[300px] overflow-y-auto font-mono whitespace-pre-wrap break-all"></pre>
+            </div>
+        </div>
+
+        <div class="rounded-lg border border-gray-800 bg-gray-900 overflow-hidden transition-all hover:border-gray-700">
+            <div class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-800/50 transition" onclick="toggleAccordion('recommend')">
+                <div class="flex items-center gap-3">
+                    <span class="px-2.5 py-0.5 text-[10px] font-bold rounded bg-blue-600/20 text-blue-400 border border-blue-600/30">GET</span>
+                    <h3 class="font-semibold text-sm">Rekomendasi</h3>
+                    <code class="font-mono text-gray-500 text-xs hidden sm:block">/api/recommend</code>
+                </div>
+                <i id="arrow-recommend" class="fa-solid fa-chevron-right text-gray-500 text-sm transition-transform duration-200"></i>
+            </div>
+            
+            <div id="content-recommend" class="hidden border-t border-gray-800 bg-black/20 p-4">
+                <button id="btn-recommend" onclick="testGetEndpoint('recommend', 'https://dramabox-api-rho.vercel.app/api/recommend', {})" 
+                    class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-xs font-semibold flex items-center gap-2 transition">
+                    <i class="fa-solid fa-play text-[10px]"></i> Uji Endpoint
+                </button>
+                <div id="result-header-recommend" class="mt-4 hidden p-3 rounded-t bg-gray-800 border border-gray-700 text-xs"></div>
+                <pre id="result-content-recommend" class="hidden p-3 rounded-b bg-gray-900 border border-t-0 border-gray-700 text-xs max-h-[300px] overflow-y-auto font-mono whitespace-pre-wrap break-all"></pre>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer class="mt-16 py-8 border-t border-gray-800 text-center space-y-2">
+    <p class="text-xs text-gray-500">Dramabox Api v1.1.0 (Vercel Server)</p>
+    <a href="https://t.me/xenforoid" class="text-blue-500 text-xs hover:underline flex items-center justify-center gap-1">
+        <i class="fa-brands fa-telegram"></i> Hubungi Admin
+    </a>
+</footer>
+
+<script>
+// --- Base Url Variable REMOVED ---
+let currentLang = 'in'; 
+const languageMap = [
+    { code: 'in', name: '🇮🇩 Indonesia' },
+    { code: 'en', name: '🇺🇸 English' },
+    { code: 'ja', name: '🇯🇵 日本語' },
+    { code: 'zhHans', name: '🇨🇳 简体中文' },
+    { code: 'zh', name: '🇹🇼 繁體中文' },
+    { code: 'es', name: '🇪🇸 Español' },
+    { code: 'de', name: '🇩🇪 Deutsch' },
+    { code: 'fr', name: '🇫🇷 Français' },
+    { code: 'pt', name: '🇵🇹 Português' },
+    { code: 'ar', name: '🇸🇦 العربية' },
+    { code: 'th', name: '🇹🇭 ไทย' },
+    { code: 'tl', name: '🇵🇭 Tagalog' }
+];
+
+function initializeLanguageSelector() {
+    const selector = document.getElementById('langOptionsContainer'); 
+    const currentLangDisplay = document.getElementById('currentLang'); 
+    const langBtn = document.getElementById("langDropdownBtn");
+    const langMenu = document.getElementById("langMenu");
+    const defaultLang = 'in';
+
+    languageMap.forEach(lang => {
+        const button = document.createElement('button');
+        button.className = 'block w-full text-left px-4 py-2 text-xs text-gray-300 hover:bg-blue-600 hover:text-white transition';
+        button.setAttribute('data-lang', lang.code);
+        button.textContent = lang.name;
+        
+        button.addEventListener("click", () => {
+            currentLang = lang.code;
+            currentLangDisplay.innerText = lang.name; 
+            langMenu.classList.add("hidden");
+        });
+        
+        selector.appendChild(button);
+    });
+
+    const defaultLangItem = languageMap.find(l => l.code === defaultLang);
+    if (defaultLangItem) {
+        currentLang = defaultLang;
+        currentLangDisplay.innerText = defaultLangItem.name;
+    }
+
+    langBtn.addEventListener("click", () => langMenu.classList.toggle("hidden"));
+    
+    document.addEventListener('click', function(event) {
+        if (!langBtn.contains(event.target) && !langMenu.contains(event.target)) {
+            langMenu.classList.add('hidden');
+        }
+    });
+}
+
+function toggleAccordion(endpointId) {
+    const content = document.getElementById(`content-${endpointId}`);
+    const arrow = document.getElementById(`arrow-${endpointId}`);
+    if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        arrow.classList.add('rotate-90');
+    } else {
+        content.classList.add('hidden');
+        arrow.classList.remove('rotate-90');
+    }
+}
+
+// Fungsi untuk memberi warna pada JSON (Syntax Highlighting)
+function syntaxHighlight(json) {
+    if (typeof json != 'string') {
+         json = JSON.stringify(json, undefined, 2);
+    }
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'json-number';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'json-key';
+            } else {
+                cls = 'json-string';
+            }
+        } else if (/true|false/.test(match)) {
+            cls = 'json-boolean';
+        } else if (/null/.test(match)) {
+            cls = 'json-null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+    });
+}
+
+function displayResult(id, data, error, responseTimeMs) {
+  const headerDiv = document.getElementById('result-header-' + id);
+  const contentDiv = document.getElementById('result-content-' + id);
+  headerDiv.classList.remove('hidden');
+  contentDiv.classList.remove('hidden');
+  
+  if (error) {
+    headerDiv.innerHTML = `<div class="flex justify-between items-center text-red-400 font-bold"><span>❌ GAGAL</span> <span class="text-[10px] font-mono text-gray-500">${responseTimeMs.toFixed(0)}ms</span></div>`;
+    contentDiv.innerHTML = syntaxHighlight({ error: error });
+  } else {
+    headerDiv.innerHTML = `<div class="flex justify-between items-center text-green-400 font-bold"><span>✅ SUKSES</span> <span class="text-[10px] font-mono text-gray-500">${responseTimeMs.toFixed(0)}ms</span></div>`;
+    contentDiv.innerHTML = syntaxHighlight(data);
+  }
+}
+
+// Revised function: Accepts FULL URL (manual) instead of relative path + base url
+async function testGetEndpoint(endpointId, urlInput, defaultParams = {}) {
+    const btn = document.getElementById(`btn-${endpointId}`);
+    const headerDiv = document.getElementById('result-header-' + endpointId);
+    const contentDiv = document.getElementById('result-content-' + endpointId);
+    
+    // ANTI-SPAM: Disable tombol
+    if(btn) btn.disabled = true;
+
+    headerDiv.classList.remove("hidden");
+    contentDiv.classList.add("hidden"); 
+    headerDiv.innerHTML = '<span class="text-blue-400 animate-pulse"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Memuat...</span>';
+    
+    const startTime = performance.now(); 
+    
+    // Use the input URL directly (which is now hardcoded in the HTML)
+    let fullUrl = urlInput;
+    const queryParams = [];
+
+    for (const [key, defaultValue] of Object.entries(defaultParams)) {
+        if (fullUrl.includes(`:${key}`)) {
+            // Replace path parameters directly in the Full URL
+            fullUrl = fullUrl.replace(`:${key}`, defaultValue);
+        } else if (defaultValue !== '') {
+            queryParams.push(`${key}=${encodeURIComponent(defaultValue)}`);
+        }
+    }
+    
+    queryParams.push(`lang=${currentLang}`);
+    
+    // Check if URL already has query params
+    const separator = fullUrl.includes('?') ? '&' : '?';
+    if (queryParams.length > 0) fullUrl += separator + queryParams.join('&');
+    
+    try {
+        const response = await fetch(fullUrl);
+        const data = await response.json();
+        const endTime = performance.now(); 
+        if (!response.ok) throw new Error(`Status ${response.status}`);
+        displayResult(endpointId, data, null, endTime - startTime); 
+    } catch (error) {
+        displayResult(endpointId, null, error.message, performance.now() - startTime);
+    } finally {
+        // Aktifkan kembali tombol
+        if(btn) btn.disabled = false;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initializeLanguageSelector);
+</script>
+
+</body>
+</html>
