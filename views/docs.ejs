@@ -270,7 +270,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div class="input-wrapper">
                             <i class="input-icon fa-solid fa-search"></i>
-                            <input type="text" id="input-search-keyword" placeholder="Masukkan keyword..."
+                            <input type="text" id="input-search-keyword" value="ceo" placeholder="Masukkan keyword..."
                                 class="input-modern">
                         </div>
                         <div class="input-wrapper">
@@ -315,8 +315,8 @@
                     <p class="text-sm text-gray-400 mb-4">Mendapatkan seluruh episode drama dalam format JSON.</p>
                     <div class="input-wrapper mb-4">
                         <i class="input-icon fa-solid fa-book"></i>
-                        <input type="text" id="input-download-all-bookId" placeholder="Masukkan Book ID..."
-                            class="input-modern">
+                        <input type="text" id="input-download-all-bookId" value="41000122558"
+                            placeholder="Masukkan Book ID..." class="input-modern">
                     </div>
                     <button id="btn-download-all"
                         onclick="testEndpoint('download-all', '/download/:bookId', { bookId: document.getElementById('input-download-all-bookId').value })"
@@ -427,8 +427,8 @@
                     <p class="text-sm text-gray-400 mb-4">Mendapatkan detail lengkap sebuah drama.</p>
                     <div class="input-wrapper mb-4">
                         <i class="input-icon fa-solid fa-book"></i>
-                        <input type="text" id="input-detail-bookId" placeholder="Masukkan Book ID..."
-                            class="input-modern">
+                        <input type="text" id="input-detail-bookId" value="41000122558"
+                            placeholder="Masukkan Book ID..." class="input-modern">
                     </div>
                     <button id="btn-detail"
                         onclick="testEndpoint('detail', '/api/detail/:bookId/v2', { bookId: document.getElementById('input-detail-bookId').value })"
@@ -464,8 +464,8 @@
                     <p class="text-sm text-gray-400 mb-4">Mendapatkan daftar semua chapter/episode sebuah drama.</p>
                     <div class="input-wrapper mb-4">
                         <i class="input-icon fa-solid fa-book"></i>
-                        <input type="text" id="input-chapters-bookId" placeholder="Masukkan Book ID..."
-                            class="input-modern">
+                        <input type="text" id="input-chapters-bookId" value="41000122558"
+                            placeholder="Masukkan Book ID..." class="input-modern">
                     </div>
                     <button id="btn-chapters"
                         onclick="testEndpoint('chapters', '/api/chapters/:bookId', { bookId: document.getElementById('input-chapters-bookId').value })"
@@ -504,8 +504,8 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div class="input-wrapper">
                             <i class="input-icon fa-solid fa-book"></i>
-                            <input type="text" id="input-stream-bookId" placeholder="Masukkan Book ID..."
-                                class="input-modern">
+                            <input type="text" id="input-stream-bookId" value="41000122558"
+                                placeholder="Masukkan Book ID..." class="input-modern">
                         </div>
                         <div class="input-wrapper">
                             <i class="input-icon fa-solid fa-tv"></i>
@@ -580,7 +580,8 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div class="input-wrapper">
                             <i class="input-icon fa-solid fa-hashtag"></i>
-                            <input type="number" id="input-category-id" placeholder="Category ID" class="input-modern">
+                            <input type="number" id="input-category-id" value="449" placeholder="Category ID"
+                                class="input-modern">
                         </div>
                         <div class="input-wrapper">
                             <i class="input-icon fa-solid fa-file"></i>
@@ -670,14 +671,12 @@
             arrow.classList.toggle('rotate-90');
         }
 
-        function syntaxHighlight(json) {
-            if (typeof json != 'string') json = JSON.stringify(json, null, 2);
-            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            return json.replace(/"([^"]+)":/g, '<span class="json-key">"$1":</span>')
-                .replace(/"([^"]+)"/g, '<span class="json-string">"$1"</span>')
-                .replace(/\b(\d+)\b/g, '<span class="json-number">$1</span>')
-                .replace(/\b(true|false)\b/g, '<span class="json-boolean">$1</span>')
-                .replace(/\bnull\b/g, '<span class="json-null">null</span>');
+        // Store raw response data for copy/download
+        let lastResponseData = {};
+
+        function formatJson(json) {
+            if (typeof json !== 'string') json = JSON.stringify(json, null, 2);
+            return json;
         }
 
         function displayResult(id, data, error, timeMs) {
@@ -687,12 +686,68 @@
             content.classList.remove('hidden');
 
             if (error) {
-                header.innerHTML = `<div class="flex justify-between items-center"><span class="text-red-400 font-semibold"><i class="fa-solid fa-times-circle mr-2"></i>Error</span><span class="text-gray-500 text-xs">${timeMs.toFixed(0)}ms</span></div>`;
-                content.innerHTML = syntaxHighlight({ error });
+                header.innerHTML = `<div class="flex justify-between items-center">
+                    <span class="text-red-400 font-semibold"><i class="fa-solid fa-times-circle mr-2"></i>Error</span>
+                    <span class="text-gray-500 text-xs">${timeMs.toFixed(0)}ms</span>
+                </div>`;
+                content.textContent = formatJson({ error });
+                lastResponseData[id] = null;
             } else {
-                header.innerHTML = `<div class="flex justify-between items-center"><span class="text-green-400 font-semibold"><i class="fa-solid fa-check-circle mr-2"></i>Success</span><span class="text-gray-500 text-xs">${timeMs.toFixed(0)}ms</span></div>`;
-                content.innerHTML = syntaxHighlight(data);
+                lastResponseData[id] = data;
+                header.innerHTML = `<div class="flex justify-between items-center">
+                    <span class="text-green-400 font-semibold"><i class="fa-solid fa-check-circle mr-2"></i>Success</span>
+                    <div class="flex items-center gap-2">
+                        <span class="text-gray-500 text-xs">${timeMs.toFixed(0)}ms</span>
+                        <button onclick="copyResponse('${id}')" class="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs flex items-center gap-1 transition" title="Copy">
+                            <i class="fa-solid fa-copy"></i> Copy
+                        </button>
+                        <button onclick="downloadResponse('${id}')" class="px-3 py-1 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 text-xs flex items-center gap-1 transition" title="Download">
+                            <i class="fa-solid fa-download"></i> TXT
+                        </button>
+                    </div>
+                </div>`;
+                content.textContent = formatJson(data);
             }
+        }
+
+        function copyResponse(id) {
+            const data = lastResponseData[id];
+            if (!data) return;
+            const text = JSON.stringify(data, null, 2);
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Berhasil disalin ke clipboard!');
+            }).catch(() => {
+                showToast('Gagal menyalin', true);
+            });
+        }
+
+        function downloadResponse(id) {
+            const data = lastResponseData[id];
+            if (!data) return;
+            const text = JSON.stringify(data, null, 2);
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `response_${id}_${Date.now()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('File berhasil diunduh!');
+        }
+
+        function showToast(message, isError = false) {
+            const toast = document.createElement('div');
+            toast.className = `fixed bottom-4 right-4 px-4 py-3 rounded-xl text-sm font-medium transition-all transform translate-y-0 opacity-100 z-50 ${isError ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
+                }`;
+            toast.innerHTML = `<i class="fa-solid ${isError ? 'fa-times-circle' : 'fa-check-circle'} mr-2"></i>${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
         }
 
         async function testEndpoint(id, path, params = {}) {
