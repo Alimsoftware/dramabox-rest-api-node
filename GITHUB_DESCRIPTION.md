@@ -1,22 +1,22 @@
-# GitHub Description (Short)
+# Descrição do GitHub (Curta)
 
-🎬 Modern REST API for Dramabox content - Search, Stream, Episodes & more. Production-ready with rate limiting, caching, and auto-retry.
+🎬 API REST moderna para conteúdo Dramabox – Busca, Streaming, Episódios e muito mais. Pronta para produção com limitação de taxa, cache e auto-retry.
 
-# Topics/Tags (comma-separated)
+# Tópicos/Tags (separados por vírgula)
 
 dramabox, api, nodejs, express, rest-api, streaming, drama, video-api, scraping, vercel
 
 # Features Highlights for GitHub About
 
-- 🔍 Search dramas by keyword
-- 📺 Get streaming URLs (m3u8/mp4)
-- 📋 Episode listings
-- 🏷️ Category browsing
-- ⭐ Recommendations
-- 👑 VIP content access
-- ⚡ Rate limiting (100 req/min)
-- 🗜️ Gzip compression
-- 🔒 Security headers
-- 🔄 Auto-retry with backoff
-- 💾 Response caching
-- 📊 Health check endpoint
+- 🔍 Buscar dramas por palavra-chave
+- 📺 Obter URLs de streaming (m3u8/mp4)
+- 📋 Listagem de episódios
+- 🏷️ Navegação por categorias
+- ⭐ Recomendações
+- 👑 Acesso a conteúdo VIP
+- ⚡ Limitação de taxa (100 req/min)
+- 🗜️ Compressão Gzip
+- 🔒 Cabeçalhos de segurança
+- 🔄 Auto-retry com backoff
+- 💾 Cache de respostas
+- 📊 Endpoint de verificação de saúde (health check)
