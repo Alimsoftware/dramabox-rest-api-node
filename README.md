@@ -2,70 +2,70 @@
 
 # 🎬 Dramabox API
 
-### Modern REST API untuk mengakses konten Dramabox
+### API REST moderna para acessar o conteúdo do Dramabox
 
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-4.x-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
-[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.2.0-green?style=for-the-badge)]()
+[![Licença](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
+[![Versão](https://img.shields.io/badge/Version-1.2.0-green?style=for-the-badge)]()
 
-[🚀 Demo](https://dramabox-api-rho.vercel.app/) • [📖 Dokumentasi](#-endpoints) • [🐛 Report Bug](https://github.com/yourusername/dramabox-api/issues)
+[🚀 Demo](https://dramabox-api-rho.vercel.app/) • [📖 Documentação](#-endpoints) • [🐛 Reportar bug](https://github.com/yourusername/dramabox-api/issues)
 
 </div>
 
 ---
 
-## ✨ Features
+## ✨ Características
 
-| Fitur                  | Deskripsi                         |
+| Recurso                  | Descrição                         |
 | ---------------------- | --------------------------------- |
-| 🔍 **Search**          | Cari drama berdasarkan keyword    |
-| 📺 **Streaming**       | Dapatkan URL streaming (m3u8/mp4) |
-| 📋 **Episode List**    | Daftar semua chapter/episode      |
-| 🏷️ **Categories**      | Jelajahi berdasarkan kategori     |
-| ⭐ **Recommendations** | Drama yang direkomendasikan       |
-| 👑 **VIP Content**     | Akses konten VIP/Theater          |
+| 🔍 **Pesquisa**          | Pesquise dramas com base em palavras-chave    |
+| 📺 **Streaming**       | Obtenha URL de streaming (m3u8/mp4) |
+| 📋 **Lista de episódios**    | Lista de todos os capítulos/episódios|
+| 🏷️ **Categorias**      | Navegue por categoria    |
+| ⭐ **Recomendações** | Drama recomendado       |
+| 👑 **Conteúdo VIP**     | Acesse conteúdo VIP/Teatro         |
 
-## 🛡️ Production Ready
+## 🛡️ Produção pronta
 
-| Best Practice        | Status          |
+| Melhores Práticas        | Status          |
 | -------------------- | --------------- |
 | ⚡ Rate Limiting     | ✅ 100 req/min  |
-| 🗜️ Gzip Compression  | ✅ ~70% smaller |
+| 🗜️ Gzip Compression  | ✅ ~70% Menor |
 | 🔒 Security Headers  | ✅ Helmet       |
 | 🔄 Auto Retry        | ✅ 3x + backoff |
 | 💾 Response Caching  | ✅ 5-60 min TTL |
 | 📊 Health Check      | ✅ /health      |
-| 🎯 Input Validation  | ✅ Sanitized    |
+| 🎯 Input Validation  | ✅ Higienizado    |
 | 🚦 Graceful Shutdown | ✅ SIGTERM      |
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Início rápido
 
-### Prerequisites
+### Pré-requisitos
 
 - Node.js 18+
-- npm atau yarn
+- npm Ou yarn
 
-### Installation
+### Instalação
 
 ```bash
-# Clone repository
+# Clonar repositório
 git clone https://github.com/yourusername/dramabox-api.git
 cd dramabox-api
 
-# Install dependencies
+# Instalar dependências
 npm install
 
-# Build CSS (optional)
+# Construir CSS (opcional)
 npm run build:css
 
-# Start development server
+# Iniciar servidor de desenvolvimento
 npm run dev
 ```
 
-### Environment Variables (Optional)
+### Variáveis ​​de ambiente (opcional)
 
 ```env
 PORT=3000
@@ -76,83 +76,83 @@ NODE_ENV=development
 
 ## 📖 Endpoints
 
-### Base URL
+### URL base
 
 ```
 Local: http://localhost:3000
-Production: https://dramabox-api-rho.vercel.app
+Produção: https://dramabox-api-rho.vercel.app
 ```
 
-### 🔍 Search Drama
+### 🔍 Pesquisar Drama
 
 ```http
 GET /api/search?keyword={keyword}&page={page}&size={size}&lang={lang}
 ```
 
-| Parameter | Type   | Required | Default | Description          |
+| Parâmetro | Tipo   | Obrigatório | Padrão | Descrição          |
 | --------- | ------ | -------- | ------- | -------------------- |
-| keyword   | string | ✅       | -       | Kata kunci pencarian |
-| page      | number | ❌       | 1       | Halaman              |
-| size      | number | ❌       | 20      | Jumlah per halaman   |
-| lang      | string | ❌       | in      | Bahasa (in/en/th)    |
+| keyword   | string | ✅       | -       | Palavras-chave de pesquisa |
+| page      | number | ❌       | 1       | Página              |
+| size      | number | ❌       | 20      | Número por página   |
+| lang      | string | ❌       | in      | Linguagem (in/en/pt)    |
 
-### 🏠 Home / Drama List
+### 🏠 Início /Lista de Dramas
 
 ```http
 GET /api/home?page={page}&size={size}&lang={lang}
 ```
 
-### 👑 VIP / Theater
+### 👑 VIP /Teatro
 
 ```http
 GET /api/vip?lang={lang}
 ```
 
-### 📄 Drama Detail
+### 📄 Detalhe do drama
 
 ```http
 GET /api/detail/{bookId}/v2?lang={lang}
 ```
 
-### 📋 Episode List
+### 📋 Lista de episódios
 
 ```http
 GET /api/chapters/{bookId}?lang={lang}
 ```
 
-### 📺 Stream URL
+### 📺 URL de transmissão
 
 ```http
 GET /api/stream?bookId={bookId}&episode={episode}&lang={lang}
 ```
 
-| Parameter | Type   | Required | Description   |
+| Parâmetro | Tipo   | Obrigatório | Descrição   |
 | --------- | ------ | -------- | ------------- |
-| bookId    | number | ✅       | ID drama      |
-| episode   | number | ✅       | Nomor episode |
+| bookId    | number | ✅       | ID do drama      |
+| episode   | number | ✅       | Número do episódio |
 
-### ⬇️ Batch Download
+### ⬇️ Download em lote
 
 ```http
 GET /download/{bookId}?lang={lang}
 ```
 
-> ⚠️ Rate limit: 5 request/menit
+> ⚠️ Limite de taxa: 5 requisições por minuto
 
-### 🏷️ Categories
+### 🏷️ Categorias
 
 ```http
 GET /api/categories?lang={lang}
 GET /api/category/{id}?page={page}&size={size}&lang={lang}
 ```
 
-### ⭐ Recommendations
+### ⭐ Recomendações
 
 ```http
 GET /api/recommend?lang={lang}
 ```
 
-### 💚 Health Check
+### 💚 Verificação de saúde
 
 ```http
 GET /health
@@ -160,9 +160,9 @@ GET /health
 
 ---
 
-## 📦 Response Format
+## 📦 Formato de resposta
 
-### ✅ Success Response
+### ✅ Resposta de sucesso
 
 ```json
 {
@@ -179,14 +179,14 @@ GET /health
 }
 ```
 
-### ❌ Error Response
+### ❌ Resposta de erro
 
 ```json
 {
   "success": false,
   "error": {
     "code": "VALIDATION_ERROR",
-    "message": "Parameter wajib: keyword"
+    "message": "Parâmetros obrigatórios: keyword"
   },
   "meta": {
     "timestamp": "2024-01-01T00:00:00.000Z"
@@ -194,39 +194,39 @@ GET /health
 }
 ```
 
-### Error Codes
+### Códigos de erro
 
-| Code                  | HTTP | Description            |
+| Código                  | HTTP | Descrição            |
 | --------------------- | ---- | ---------------------- |
-| `VALIDATION_ERROR`    | 400  | Input tidak valid      |
-| `NOT_FOUND`           | 404  | Data tidak ditemukan   |
-| `RATE_LIMIT_EXCEEDED` | 429  | Terlalu banyak request |
-| `REQUEST_TIMEOUT`     | 408  | Request timeout        |
-| `INTERNAL_ERROR`      | 500  | Server error           |
+| `VALIDATION_ERROR`    | 400  | Entrada inválida      |
+| `NOT_FOUND`           | 404  | Dados não encontrados  |
+| `RATE_LIMIT_EXCEEDED` | 429  | Muitas solicitações |
+| `REQUEST_TIMEOUT`     | 408  | Tempo limite de solicitações |
+| `INTERNAL_ERROR`      | 500  | Erro no servidor          |
 
 ---
 
-## 🗂️ Project Structure
+## 🗂️ Estrutura do Projeto
 
 ```
 dramabox-api/
 ├── 📁 src/
 │   ├── 📁 services/
-│   │   └── 📄 Dramabox.js      # Core API service
+│   │   └── 📄 Dramabox.js      # Serviço principal da API
 │   ├── 📁 utils/
-│   │   ├── 📄 DramaboxUtil.js  # Utility functions
-│   │   └── 📄 proxyManager.js  # Proxy management
+│   │   ├── 📄 DramaboxUtil.js  # Funções utilitárias
+│   │   └── 📄 proxyManager.js  # Gerenciamento de proxy
 │   └── 📁 styles/
-│       └── 📄 input.css        # Tailwind source
+│       └── 📄 input.css        # Fonte do Tailwind
 ├── 📁 public/
 │   └── 📁 css/
-│       └── 📄 styles.css       # Compiled CSS
+│       └── 📄 styles.css       # CSS compilado
 ├── 📁 views/
-│   └── 📄 docs.ejs             # Documentation page
-├── 📄 server.js                # Main server
+│   └── 📄 docs.ejs             # Página de documentação
+├── 📄 server.js                # Servidor principal
 ├── 📄 tailwind.config.js
 ├── 📄 package.json
-└── 📄 vercel.json              # Vercel config
+└── 📄 vercel.json              # Configuração do Vercel
 ```
 
 ---
@@ -234,17 +234,17 @@ dramabox-api/
 ## 🛠️ Scripts
 
 ```bash
-npm start        # Production server
-npm run dev      # Development with hot reload
-npm run build:css   # Build Tailwind CSS
-npm run watch:css   # Watch Tailwind changes
+npm start        # Servidor de produção
+npm run dev      # Desenvolvimento com recarregamento automático
+npm run build:css   # Compilar o Tailwind CSS
+npm run watch:css   # Monitorar alterações do Tailwind
 ```
 
 ---
 
 ## 🚀 Deploy
 
-### Vercel (Recommended)
+### Vercel (Recomendado)
 
 ```bash
 npm i -g vercel
@@ -265,7 +265,7 @@ CMD ["npm", "start"]
 
 ---
 
-## 📝 Changelog
+## 📝 Registro de alterações
 
 ### v1.2.0 (2024-12-30)
 
@@ -288,11 +288,11 @@ CMD ["npm", "start"]
 
 ### v1.0.0
 
-- 🎉 Initial release
+- 🎉 Lançamento inicial
 
 ---
 
-## 👨‍💻 Developer
+## 👨‍💻 Desenvolvedor
 
 **Handoko x Mari Partner**
 
@@ -300,7 +300,7 @@ CMD ["npm", "start"]
 
 ---
 
-## 📄 License
+## 📄 Licença
 
 MIT License - feel free to use for personal or commercial projects.
 
@@ -308,8 +308,8 @@ MIT License - feel free to use for personal or commercial projects.
 
 <div align="center">
 
-**⭐ Star this repo if you find it useful!**
+**⭐ Marque este repositório com estrela se você achar útil!**
 
-Made with ❤️ in Indonesia 🇮🇩
+Feito com ❤️ na Indonésia 🇮🇩
 
 </div>
