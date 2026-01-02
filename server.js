@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
 import rateLimit from "express-rate-limit";
+import { ipKeyGenerator } from "express-rate-limit";
 import Dramabox from "./src/services/Dramabox.js";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -14,7 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const NODE_ENV = process.env.NODE_ENV || "development";
 
 // ============================================
@@ -75,7 +76,8 @@ const limiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => req.ip || req.headers["x-forwarded-for"] || "unknown",
+  //keyGenerator: (req) => req.ip || req.headers["x-forwarded-for"] || "unknown",
+   keyGenerator: (req) => ipKeyGenerator(req),
 });
 app.use("/api/", limiter);
 
