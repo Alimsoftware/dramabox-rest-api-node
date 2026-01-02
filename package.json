@@ -1,7 +1,7 @@
 {
   "name": "dramabox-api-nodejs",
   "version": "1.2.0",
-  "description": "Dramabox API Server - REST API untuk mengakses konten Dramabox",
+  "description": "Dramabox API Server - API REST para acessar o conteúdo do Dramabox",
   "main": "server.js",
   "type": "module",
   "scripts": {

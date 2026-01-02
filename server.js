@@ -70,7 +70,7 @@ const limiter = rateLimit({
     success: false,
     error: {
       code: "RATE_LIMIT_EXCEEDED",
-      message: "Terlalu banyak request. Coba lagi dalam 1 menit.",
+      message: "Muitos pedidos. Tente novamente em 1 minuto.",
     },
   },
   standardHeaders: true,
@@ -86,7 +86,7 @@ app.use((req, res, next) => {
       success: false,
       error: {
         code: "REQUEST_TIMEOUT",
-        message: "Request timeout. Silakan coba lagi.",
+        message: "Tempo limitede de solicitação. Por favor, tente novamente.",
       },
     });
   });
@@ -162,7 +162,7 @@ const apiResponse = {
 const validateRequired = (params, required) => {
   const missing = required.filter((key) => !params[key]);
   if (missing.length > 0) {
-    return `Parameter wajib: ${missing.join(", ")}`;
+    return `Parâmetros obrigatórios: ${missing.join(", ")}`;
   }
   return null;
 };
@@ -209,7 +209,7 @@ app.get("/", (req, res) => {
 app.get(
   "/api/search",
   asyncHandler(async (req, res) => {
-    const { keyword, page = 1, size = 20, lang = "in" } = req.query;
+    const { keyword, page = 1, size = 20, lang = "pt" } = req.query;
 
     const validationError = validateRequired({ keyword }, ["keyword"]);
     if (validationError) {
@@ -233,7 +233,7 @@ app.get(
 app.get(
   "/api/home",
   asyncHandler(async (req, res) => {
-    const { page = 1, size = 10, lang = "in" } = req.query;
+    const { page = 1, size = 10, lang = "pt" } = req.query;
 
     const dramabox = getDramaboxInstance(lang);
     const result = await dramabox.getDramaList(parseInt(page), parseInt(size));
@@ -246,7 +246,7 @@ app.get(
 app.get(
   "/api/vip",
   asyncHandler(async (req, res) => {
-    const { lang = "in" } = req.query;
+    const { lang = "pt" } = req.query;
 
     const dramabox = getDramaboxInstance(lang);
     const result = await dramabox.getVip();
@@ -260,13 +260,13 @@ app.get(
   "/api/detail/:bookId/v2",
   asyncHandler(async (req, res) => {
     const { bookId } = req.params;
-    const { lang = "in" } = req.query;
+    const { lang = "pt" } = req.query;
 
     if (!bookId || isNaN(bookId)) {
       return res
         .status(400)
         .json(
-          apiResponse.error("VALIDATION_ERROR", "bookId harus berupa angka")
+          apiResponse.error("VALIDATION_ERROR", "bookId deve ser um número")
         );
     }
 
@@ -282,13 +282,13 @@ app.get(
   "/api/chapters/:bookId",
   asyncHandler(async (req, res) => {
     const { bookId } = req.params;
-    const { lang = "in" } = req.query;
+    const { lang = "pt" } = req.query;
 
     if (!bookId || isNaN(bookId)) {
       return res
         .status(400)
         .json(
-          apiResponse.error("VALIDATION_ERROR", "bookId harus berupa angka")
+          apiResponse.error("VALIDATION_ERROR", "bookId deve ser um número")
         );
     }
 
@@ -307,7 +307,7 @@ app.get(
 app.get(
   "/api/stream",
   asyncHandler(async (req, res) => {
-    const { bookId, episode, lang = "in" } = req.query;
+    const { bookId, episode, lang = "pt" } = req.query;
 
     const validationError = validateRequired({ bookId, episode }, [
       "bookId",
@@ -325,7 +325,7 @@ app.get(
         .json(
           apiResponse.error(
             "VALIDATION_ERROR",
-            "bookId dan episode harus berupa angka"
+            "bookId e episode devem ser números"
           )
         );
     }
@@ -343,7 +343,7 @@ const downloadLimiter = rateLimit({
   max: 5, // Only 5 requests per minute for download
   message: apiResponse.error(
     "RATE_LIMIT_EXCEEDED",
-    "Download dibatasi 5 request per menit"
+    "Download limitado a 5 solicitações por minuto"
   ),
 });
 
@@ -352,13 +352,13 @@ app.get(
   downloadLimiter,
   asyncHandler(async (req, res) => {
     const { bookId } = req.params;
-    const { lang = "in" } = req.query;
+    const { lang = "pt" } = req.query;
 
     if (!bookId || isNaN(bookId)) {
       return res
         .status(400)
         .json(
-          apiResponse.error("VALIDATION_ERROR", "bookId harus berupa angka")
+          apiResponse.error("VALIDATION_ERROR", "bookId deve ser um número")
         );
     }
 
@@ -371,7 +371,7 @@ app.get(
         .json(
           apiResponse.error(
             "NOT_FOUND",
-            "Data tidak ditemukan atau terjadi error"
+            "Dados não encontrados ou ocorreu um erro"
           )
         );
     }
@@ -389,7 +389,7 @@ app.get(
 app.get(
   "/api/categories",
   asyncHandler(async (req, res) => {
-    const { lang = "in" } = req.query;
+    const { lang = "pt" } = req.query;
 
     const dramabox = getDramaboxInstance(lang);
     const result = await dramabox.getCategories();
@@ -407,7 +407,7 @@ app.get(
   "/api/category/:id",
   asyncHandler(async (req, res) => {
     const { id } = req.params;
-    const { page = 1, size = 10, lang = "in" } = req.query;
+    const { page = 1, size = 10, lang = "pt" } = req.query;
 
     if (!id || isNaN(id)) {
       return res
@@ -415,7 +415,7 @@ app.get(
         .json(
           apiResponse.error(
             "VALIDATION_ERROR",
-            "id kategori harus berupa angka"
+            "id categoria deve ser um número"
           )
         );
     }
@@ -435,7 +435,7 @@ app.get(
 app.get(
   "/api/recommend",
   asyncHandler(async (req, res) => {
-    const { lang = "in" } = req.query;
+    const { lang = "pt" } = req.query;
 
     const dramabox = getDramaboxInstance(lang);
     const result = await dramabox.getRecommendedBooks();
@@ -452,7 +452,7 @@ app.get(
 app.get(
   "/api/generate-header",
   asyncHandler(async (req, res) => {
-    const { lang = "in" } = req.query;
+    const { lang = "pt" } = req.query;
 
     const dramabox = getDramaboxInstance(lang);
     const tokenData = await dramabox.getToken();
@@ -484,7 +484,7 @@ app.use((req, res) => {
     .json(
       apiResponse.error(
         "NOT_FOUND",
-        `Endpoint ${req.method} ${req.path} tidak ditemukan`
+        `Endpoint ${req.method} ${req.path} não encontrado`
       )
     );
 });
@@ -503,7 +503,7 @@ app.use((err, req, res, next) => {
   if (err.code === "ECONNABORTED" || err.message.includes("timeout")) {
     return res
       .status(408)
-      .json(apiResponse.error("REQUEST_TIMEOUT", "Permintaan timeout"));
+      .json(apiResponse.error("REQUEST_TIMEOUT", "Tempo limite de solicitação"));
   }
 
   if (err.response?.status === 429) {
@@ -512,7 +512,7 @@ app.use((err, req, res, next) => {
       .json(
         apiResponse.error(
           "UPSTREAM_RATE_LIMIT",
-          "Server sumber sedang sibuk, coba lagi nanti"
+          "O servidor de origem está ocupado. Tente novamente mais tarde"
         )
       );
   }
@@ -523,7 +523,7 @@ app.use((err, req, res, next) => {
     .json(
       apiResponse.error(
         "INTERNAL_ERROR",
-        NODE_ENV === "production" ? "Terjadi kesalahan server" : err.message
+        NODE_ENV === "production" ? "Ocorreu um erro no servidor" : err.message
       )
     );
 });
@@ -536,28 +536,22 @@ const server = app.listen(PORT, () => {
   console.log("\n");
   console.log("╔══════════════════════════════════════════════════════════╗");
   console.log("║                                                          ║");
-  console.log("║   🎬  DRAMABOX API SERVER v1.2.0                         ║");
+  console.log("║   🎬  SERVIDOR DE API DRAMABOX v1.2.0                    ║");
   console.log("║                                                          ║");
   console.log("╠══════════════════════════════════════════════════════════╣");
   console.log("║                                                          ║");
-  console.log(`║   🚀  Status  : Running (${NODE_ENV})                     `);
-  console.log(
-    `║   🌐  Local   : http://localhost:${PORT}                      ║`
-  );
-  console.log(
-    `║   📖  Docs    : http://localhost:${PORT}/                      ║`
-  );
-  console.log(
-    `║   💚  Health  : http://localhost:${PORT}/health                ║`
-  );
+  console.log(`║   🚀  Status  : Executando (${NODE_ENV})                 ║`);
+  console.log(`║   🌐  Local   : http://localhost:${PORT}                 ║`);
+  console.log(`║   📖  Docs    : http://localhost:${PORT}/                 ║`);
+  console.log(`║   💚  Saúde  : http://localhost:${PORT}/health                 ║`);
   console.log("║                                                          ║");
   console.log("╠══════════════════════════════════════════════════════════╣");
-  console.log("║   Features:                                              ║");
-  console.log("║   ✓ Rate Limiting (100 req/min)                          ║");
-  console.log("║   ✓ Compressão Gzip                                     ║");
-  console.log("║   ✓ Security Headers (Helmet)                            ║");
-  console.log("║   ✓ Request Caching                                      ║");
-  console.log("║   ✓ Auto Retry with Backoff                              ║");
+  console.log("║   Características:                                       ║");
+  console.log("║   ✓ Limitação de taxa (100 req/min)                      ║");
+  console.log("║   ✓ Compressão Gzip                                      ║");
+  console.log("║   ✓ Cabeçalhos de segurança (Helmet)                     ║");
+  console.log("║   ✓ Cache de solicitações                                ║");
+  console.log("║   ✓ Repetição automática com Backoff                     ║");
   console.log("║                                                          ║");
   console.log("╚══════════════════════════════════════════════════════════╝");
   console.log("\n");
@@ -568,22 +562,22 @@ const server = app.listen(PORT, () => {
 // ============================================
 
 const gracefulShutdown = (signal) => {
-  console.log(`\n[${signal}] Shutting down gracefully...`);
+  console.log(`\n[${signal}] Desligando normalmente...`);
 
   server.close(() => {
-    console.log("[Server] HTTP server closed");
+    console.log("[Servidor] Servidor HTTP fechado");
 
     // Clear Dramabox instances
     dramaboxInstances.clear();
-    console.log("[Cache] Instances cleared");
+    console.log("[Cache] Instâncias limpas");
 
-    console.log("[Shutdown] Complete");
+    console.log("[Desligar] Completo");
     process.exit(0);
   });
 
   // Force exit after 10 seconds
   setTimeout(() => {
-    console.error("[Shutdown] Force exit after timeout");
+    console.error("[Desligar] Forçar saída após tempo limite");
     process.exit(1);
   }, 10000);
 };
@@ -593,12 +587,12 @@ process.on("SIGINT", () => gracefulShutdown("SIGINT"));
 
 // Handle uncaught errors
 process.on("uncaughtException", (err) => {
-  console.error("[FATAL] Uncaught Exception:", err);
+  console.error("[FATAL] Exceção não tratada:", err);
   gracefulShutdown("UNCAUGHT_EXCEPTION");
 });
 
 process.on("unhandledRejection", (reason, promise) => {
-  console.error("[FATAL] Unhandled Rejection at:", promise, "reason:", reason);
+  console.error("[FATAL] Rejeição não tratada em:", promise, "reason:", reason);
 });
 
 export default app;

@@ -6,7 +6,7 @@
 
 dramabox, api, nodejs, express, rest-api, streaming, drama, video-api, scraping, vercel
 
-# Features Highlights for GitHub About
+# Destaques de Recursos (GitHub About)
 
 - 🔍 Buscar dramas por palavra-chave
 - 📺 Obter URLs de streaming (m3u8/mp4)
