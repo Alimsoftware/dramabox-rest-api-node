@@ -65,41 +65,41 @@ const formatError = (error, context = "") => {
 
     switch (status) {
       case 400:
-        return `${prefix}Bad Request - Parameter tidak valid`;
+        return `${prefix}Requisição inválida - Parâmetro não válido`;
       case 401:
-        return `${prefix}Unauthorized - Token tidak valid atau expired`;
+        return `${prefix}Não autorizado - Token inválido ou expirado`;
       case 403:
-        return `${prefix}Forbidden - Akses ditolak oleh server`;
+        return `${prefix}Proibido - Acesso negado pelo servidor`;
       case 404:
-        return `${prefix}Not Found - Data tidak ditemukan`;
+        return `${prefix}Não encontrado - Dados não localizados`;
       case 408:
-        return `${prefix}Request Timeout - Server tidak merespons`;
+        return `${prefix}Tempo de requisição esgotado - Servidor não respondeu`;
       case 429:
-        return `${prefix}Too Many Requests - Rate limit tercapai, coba lagi nanti`;
+        return `${prefix}Muitas requisições - Limite de taxa atingido, tente novamente mais tarde`;
       case 500:
-        return `${prefix}Internal Server Error - Server sedang bermasalah`;
+        return `${prefix}Erro interno do servidor - Problema temporário`;
       case 502:
-        return `${prefix}Bad Gateway - Server upstream tidak merespons (coba lagi)`;
+        return `${prefix}Gateway inválido - Servidor upstream não respondeu (tente novamente)`;
       case 503:
-        return `${prefix}Service Unavailable - Server sedang maintenance`;
+        return `${prefix}Serviço indisponível - Servidor em manutenção`;
       case 504:
-        return `${prefix}Gateway Timeout - Koneksi ke server timeout`;
+        return `${prefix}Tempo limite do gateway - Conexão com o servidor expirou`;
       default:
         return `${prefix}HTTP ${status} ${statusText}`;
     }
   }
 
   if (error.code === "ECONNABORTED") {
-    return `${prefix}Request timeout - Koneksi terlalu lama`;
+    return `${prefix}Tempo de requisição esgotado - Conexão demorou demais`;
   }
   if (error.code === "ENOTFOUND") {
-    return `${prefix}DNS Error - Server tidak ditemukan`;
+    return `${prefix}Erro de DNS - Servidor não encontrado`;
   }
   if (error.code === "ECONNREFUSED") {
-    return `${prefix}Connection Refused - Server menolak koneksi`;
+    return `${prefix}Conexão recusada - Servidor rejeitou a conexão`;
   }
   if (error.code === "ECONNRESET") {
-    return `${prefix}Connection Reset - Koneksi terputus`;
+    return `${prefix}Conexão redefinida - Conexão foi interrompida`;
   }
 
   return `${prefix}${error.message}`;
@@ -117,7 +117,7 @@ export default class Dramabox {
   lang;
   instanceId;
 
-  constructor(lang = "in") {
+  constructor(lang = "pt") {
     this.util = new DramaboxUtil();
     this.lang = lang;
     this.instanceId = Math.random().toString(36).substring(7);
@@ -135,7 +135,7 @@ export default class Dramabox {
       (response) => response,
       (error) => {
         console.error(
-          `[Dramabox:${this.instanceId}] Request failed:`,
+          `[Dramabox:${this.instanceId}] Falha na solicitação:`,
           error.message
         );
         return Promise.reject(error);
@@ -164,7 +164,7 @@ export default class Dramabox {
 
     try {
       console.log(
-        `[Token] Generating new token (attempt ${attempt + 1}/${
+        `[Token] Gerando novo token (Tentativa ${attempt + 1}/${
           CONFIG.MAX_RETRIES + 1
         })...`
       );
@@ -213,7 +213,7 @@ export default class Dramabox {
       );
 
       if (!res.data?.data?.user) {
-        throw new Error("Invalid token response - user data missing");
+        throw new Error("Resposta de token inválida – faltam dados do usuário");
       }
 
       const creationTime = Date.now();
@@ -232,7 +232,7 @@ export default class Dramabox {
       this.tokenCache = tokenData;
       cache.set(cacheKey, tokenData, CONFIG.CACHE_TTL.TOKEN);
 
-      console.log(`[Token] ✅ Token generated successfully`);
+      console.log(`[Token] ✅ Token gerado com sucesso`);
       return tokenData;
     } catch (error) {
       // Retry if retryable and attempts remaining
@@ -242,13 +242,13 @@ export default class Dramabox {
           `[Token] ⚠️ ${formatError(
             error,
             "Token"
-          )} - Retrying in ${retryDelay}ms...`
+          )} - Tentando novamente em ${retryDelay}ms...`
         );
         await delay(retryDelay);
         return this.generateNewToken(Date.now(), attempt + 1);
       }
 
-      throw new Error(formatError(error, "Token generation"));
+      throw new Error(formatError(error, "Geração de token"));
     }
   }
 
@@ -331,13 +331,13 @@ export default class Dramabox {
       if (!isWebfic && response.data && response.data.success === false) {
         // Token might be invalid, refresh and retry once
         if (attempt === 0) {
-          console.log(`[Request] Token refresh needed, regenerating...`);
+          console.log(`[Solicitação] Atualização de token necessária, regenerando...`);
           this.tokenCache = null;
           cache.del(`token_${this.lang}`);
           await this.generateNewToken(Date.now());
           return await this.request(endpoint, payload, isWebfic, method, 1);
         }
-        throw new Error(response.data.message || "API request failed");
+        throw new Error(response.data.message || "Falha na requisição da API");
       }
 
       return response.data;
@@ -346,9 +346,9 @@ export default class Dramabox {
       if (attempt < CONFIG.MAX_RETRIES && isRetryableError(error)) {
         const retryDelay = getRetryDelay(attempt);
         console.log(
-          `[Request] ⚠️ ${formatError(error)} - Retry ${attempt + 1}/${
+          `[Solicitação] ⚠️ ${formatError(error)} - Tentativa ${attempt + 1}/${
             CONFIG.MAX_RETRIES
-          } in ${retryDelay}ms...`
+          } em ${retryDelay}ms...`
         );
 
         // If 502/503, also regenerate token
@@ -393,7 +393,7 @@ export default class Dramabox {
 
   async getStreamUrl(bookId, episode) {
     if (!bookId || !episode) {
-      throw new Error("Parameter bookId dan episode wajib diisi.");
+      throw new Error("Parâmetro bookId e episode são obrigatórios.");
     }
 
     const cacheKey = `stream_${bookId}_${episode}_${this.lang}`;
@@ -424,7 +424,7 @@ export default class Dramabox {
         const rawData = response.data;
 
         if (!rawData || !rawData.chapter) {
-          throw new Error("Episode tidak ditemukan atau terkunci.");
+          throw new Error("Episódio não encontrado ou bloqueado.");
         }
 
         const result = {
@@ -453,7 +453,7 @@ export default class Dramabox {
         if (attempt < CONFIG.MAX_RETRIES && isRetryableError(error)) {
           const retryDelay = getRetryDelay(attempt);
           console.log(
-            `[Stream] ⚠️ ${formatError(error)} - Retry ${attempt + 1}/${
+            `[Stream] ⚠️ ${formatError(error)} - Tentativa ${attempt + 1}/${
               CONFIG.MAX_RETRIES
             }...`
           );
@@ -467,7 +467,7 @@ export default class Dramabox {
 
   async getDramaDetail(bookId, needRecommend = false, from = "book_album") {
     if (!bookId) {
-      throw new Error("bookId is required!");
+      throw new Error("bookId é obrigatório!");
     }
 
     const cacheKey = `detail_${bookId}_${this.lang}`;
@@ -543,12 +543,12 @@ export default class Dramabox {
     let totalChapters = 0;
 
     console.log(`\n${"=".repeat(50)}`);
-    console.log(`🚀 Memulai scraping untuk Book ID: ${bookId}`);
+    console.log(`🚀 Iniciar scraping para o ID do livro.: ${bookId}`);
     console.log(`${"=".repeat(50)}`);
 
     const fetchBatch = async (index, bId, isRetry = false) => {
       try {
-        process.stdout.write(`📥 Fetching Index: ${index}... `);
+        process.stdout.write(`📥 Buscando índice: ${index}... `);
         const data = await this.request("/drama-box/chapterv2/batch/load", {
           boundaryIndex: 0,
           comingPlaySectionId: -1,
@@ -575,20 +575,20 @@ export default class Dramabox {
           !isEndOfBook
         ) {
           console.log(
-            `⚠️ Data terbatas (${chapters.length}). Memicu Refresh Token...`
+            `⚠️ Dados limitados (${chapters.length}). Disparar a atualização do token...`
           );
-          throw new Error("TriggerRetry: Data suspected limited");
+          throw new Error("TriggerRetry: Dados suspeitos de estarem limitados");
         }
 
         if (chapters.length === 0 && index !== savedPayChapterNum) {
-          throw new Error("Soft Error: Data kosong");
+          throw new Error("Erro suave: os dados estão vazios");
         }
 
-        console.log(`✅ Success (${chapters.length} items)`);
+        console.log(`✅ Successo (${chapters.length} itens)`);
         return data;
       } catch (error) {
         if (!isRetry) {
-          console.log(`\n🔄 [RETRY] Menyegarkan sesi untuk Index ${index}...`);
+          console.log(`\n🔄 [TENTATIVA] Atualizar a sessão para o índice ${index}...`);
           this.tokenCache = null;
           cache.del(`token_${this.lang}`);
           await this.generateNewToken(Date.now());
@@ -612,7 +612,7 @@ export default class Dramabox {
         const bookName = firstBatchData.data.bookName;
         savedPayChapterNum = firstBatchData.data.payChapterNum || 0;
 
-        console.log(`📖 Judul: ${bookName} | Total Eps: ${totalChapters}`);
+        console.log(`📖 Título: ${bookName} | Eps totais: ${totalChapters}`);
         if (firstBatchData.data.chapterList)
           result.push(...firstBatchData.data.chapterList);
 
@@ -668,12 +668,12 @@ export default class Dramabox {
         });
 
       console.log(`\n${"=".repeat(50)}`);
-      console.log(`✅ SELESAI. Output Bersih: ${finalResult.length} Episode`);
+      console.log(`✅ CONCLUÍDO. Saída limpa: ${finalResult.length} Episódios`);
       console.log(`${"=".repeat(50)}\n`);
 
       return finalResult;
     } catch (error) {
-      console.error("Critical Error dalam batchDownload:", error);
+      console.error("Erro crítico em batchDownload:", error);
       return [];
     }
   }
@@ -861,7 +861,7 @@ export default class Dramabox {
   clearCache() {
     cache.flushAll();
     this.tokenCache = null;
-    console.log("[Cache] All cache cleared");
+    console.log("[Cache] Todo o cache foi limpo");
   }
 
   getCacheStats() {

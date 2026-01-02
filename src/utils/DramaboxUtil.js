@@ -39,7 +39,7 @@ class DramaboxUtil {
         format: "pem",
       });
     } catch (err) {
-      console.error("[DramaboxUtil] Failed to initialize private key:", err);
+      console.error("[DramaboxUtil] Falha ao inicializar a chave privada:", err);
     }
   }
 
@@ -51,7 +51,7 @@ class DramaboxUtil {
       const signature = sign.sign(this.privateKey);
       return signature.toString("base64");
     } catch (err) {
-      console.error("[DramaboxUtil] Sign error:", err);
+      console.error("[DramaboxUtil] Erro de assinatura:", err);
       return null;
     }
   }

@@ -12,9 +12,9 @@ export function loadLocalProxy() {
       .split("\n")
       .map((x) => x.trim())
       .filter(Boolean);
-    console.log("Loaded local proxies:", proxies.length);
+    console.log("Proxies locais carregados:", proxies.length);
   } catch (err) {
-    console.log("Cannot load proxyList.txt:", err.message);
+    console.log("Não é possível carregar proxyList.txt:", err.message);
   }
 }
 
@@ -31,9 +31,9 @@ export async function loadOnlineProxy() {
     proxies.push(...online);
     proxies = [...new Set(proxies)];
 
-    console.log("Online proxies added:", online.length);
+    console.log("Proxies online adicionados:", online.length);
   } catch (error) {
-    console.log("Failed to fetch online proxies");
+    console.log("Falha ao buscar proxies on-line");
   }
 }
 
@@ -49,7 +49,7 @@ export function getRandomProxy() {
 export function autoRotate(seconds = 30) {
   setInterval(() => {
     lastRotatedProxy = getRandomProxy();
-    console.log("🔄 Rotated Proxy:", lastRotatedProxy);
+    console.log("🔄 Proxy girado:", lastRotatedProxy);
   }, seconds * 1000);
 }
 

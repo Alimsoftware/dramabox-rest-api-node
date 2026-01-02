@@ -22,7 +22,7 @@ const NODE_ENV = process.env.NODE_ENV || "development";
 // ============================================
 const dramaboxInstances = new Map();
 
-function getDramaboxInstance(lang = "in") {
+function getDramaboxInstance(lang = "pt") {
   if (!dramaboxInstances.has(lang)) {
     dramaboxInstances.set(lang, new Dramabox(lang));
   }
@@ -554,7 +554,7 @@ const server = app.listen(PORT, () => {
   console.log("╠══════════════════════════════════════════════════════════╣");
   console.log("║   Features:                                              ║");
   console.log("║   ✓ Rate Limiting (100 req/min)                          ║");
-  console.log("║   ✓ Gzip Compression                                     ║");
+  console.log("║   ✓ Compressão Gzip                                     ║");
   console.log("║   ✓ Security Headers (Helmet)                            ║");
   console.log("║   ✓ Request Caching                                      ║");
   console.log("║   ✓ Auto Retry with Backoff                              ║");

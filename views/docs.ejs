@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dramabox API - Documentation</title>
+    <title>Dramabox API - Documentação</title>
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -202,7 +202,7 @@
                 </div>
                 <div>
                     <h1 class="text-lg font-bold">Dramabox API</h1>
-                    <p class="text-xs text-gray-500">REST API Documentation</p>
+                    <p class="text-xs text-gray-500">Documentação da API REST</p>
                 </div>
             </div>
             <div class="flex items-center gap-4">
@@ -218,9 +218,9 @@
     <!-- Hero Section -->
     <div class="max-w-6xl mx-auto px-6 py-12">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold mb-3">API Documentation</h2>
+            <h2 class="text-3xl font-bold mb-3">Documentatção da API</h2>
             <p class="text-gray-400 max-w-xl mx-auto">
-                Akses konten Dramabox dengan mudah. Klik endpoint untuk melihat detail dan melakukan live test.
+                Acesse o conteúdo do Dramabox com facilidade. Clique no endpoint para ver os detalhes e realizar um teste ao vivo.
             </p>
         </div>
 
@@ -232,15 +232,15 @@
             </div>
             <div class="bg-white/5 rounded-2xl p-5 text-center border border-white/5">
                 <div class="text-2xl font-bold text-green-400">REST</div>
-                <div class="text-xs text-gray-500 mt-1">API Type</div>
+                <div class="text-xs text-gray-500 mt-1">Tipo de API</div>
             </div>
             <div class="bg-white/5 rounded-2xl p-5 text-center border border-white/5">
                 <div class="text-2xl font-bold text-purple-400">JSON</div>
-                <div class="text-xs text-gray-500 mt-1">Response</div>
+                <div class="text-xs text-gray-500 mt-1">Resposta</div>
             </div>
             <div class="bg-white/5 rounded-2xl p-5 text-center border border-white/5">
                 <div class="text-2xl font-bold text-yellow-400">v1.2</div>
-                <div class="text-xs text-gray-500 mt-1">Version</div>
+                <div class="text-xs text-gray-500 mt-1">Versão</div>
             </div>
         </div>
 
@@ -257,7 +257,7 @@
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="method-badge method-get">GET</span>
-                                <h3 class="font-semibold">Cari Drama</h3>
+                                <h3 class="font-semibold">Pesquisar drama</h3>
                             </div>
                             <code class="text-xs text-gray-500 mt-1">/api/search</code>
                         </div>
@@ -266,23 +266,23 @@
                         class="fa-solid fa-chevron-right text-gray-500 transition-transform duration-200"></i>
                 </div>
                 <div id="content-search" class="hidden border-t border-white/5 p-5 bg-black/30">
-                    <p class="text-sm text-gray-400 mb-4">Mencari drama berdasarkan kata kunci.</p>
+                    <p class="text-sm text-gray-400 mb-4">Procurar dramas com base em palavras-chave.</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div class="input-wrapper">
                             <i class="input-icon fa-solid fa-search"></i>
-                            <input type="text" id="input-search-keyword" value="ceo" placeholder="Masukkan keyword..."
+                            <input type="text" id="input-search-keyword" value="ceo" placeholder="Insira palavras-chave..."
                                 class="input-modern">
                         </div>
                         <div class="input-wrapper">
                             <i class="input-icon fa-solid fa-file"></i>
-                            <input type="number" id="input-search-page" value="1" placeholder="Halaman"
+                            <input type="number" id="input-search-page" value="1" placeholder="Página"
                                 class="input-modern">
                         </div>
                     </div>
                     <button id="btn-search"
                         onclick="testEndpoint('search', '/api/search', { keyword: document.getElementById('input-search-keyword').value, page: document.getElementById('input-search-page').value })"
                         class="btn-primary">
-                        <i class="fa-solid fa-paper-plane"></i> Kirim Request
+                        <i class="fa-solid fa-paper-plane"></i> Enviar solicitação
                     </button>
                     <div id="result-header-search"
                         class="mt-4 hidden p-4 rounded-t-xl bg-white/5 border border-white/5 text-sm"></div>
@@ -303,7 +303,7 @@
                             <div class="flex items-center gap-2">
                                 <span class="method-badge"
                                     style="background: rgba(239, 68, 68, 0.15); color: #f87171;">GET</span>
-                                <h3 class="font-semibold text-red-400">Download All Chapters</h3>
+                                <h3 class="font-semibold text-red-400">Baixar todos os episódios</h3>
                             </div>
                             <code class="text-xs text-gray-500 mt-1">/download/:bookId</code>
                         </div>
@@ -312,16 +312,16 @@
                         class="fa-solid fa-chevron-right text-gray-500 transition-transform duration-200"></i>
                 </div>
                 <div id="content-download-all" class="hidden border-t border-white/5 p-5 bg-black/30">
-                    <p class="text-sm text-gray-400 mb-4">Mendapatkan seluruh episode drama dalam format JSON.</p>
+                    <p class="text-sm text-gray-400 mb-4">Obter todos os episódios do drama em formato JSON.</p>
                     <div class="input-wrapper mb-4">
                         <i class="input-icon fa-solid fa-book"></i>
-                        <input type="text" id="input-download-all-bookId" value="41000122558"
-                            placeholder="Masukkan Book ID..." class="input-modern">
+                        <input type="text" id="input-download-all-bookId" value="42000000796"
+                            placeholder="Insira o ID do livro..." class="input-modern">
                     </div>
                     <button id="btn-download-all"
                         onclick="testEndpoint('download-all', '/download/:bookId', { bookId: document.getElementById('input-download-all-bookId').value })"
                         class="btn-primary btn-danger">
-                        <i class="fa-solid fa-download"></i> Download All
+                        <i class="fa-solid fa-download"></i> Baixar tudo
                     </button>
                     <div id="result-header-download-all"
                         class="mt-4 hidden p-4 rounded-t-xl bg-white/5 border border-white/5 text-sm"></div>
@@ -341,7 +341,7 @@
                             <div class="flex items-center gap-2">
                                 <span class="method-badge"
                                     style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">GET</span>
-                                <h3 class="font-semibold text-yellow-400">VIP Channel</h3>
+                                <h3 class="font-semibold text-yellow-400">Canal VIP</h3>
                             </div>
                             <code class="text-xs text-gray-500 mt-1">/api/vip</code>
                         </div>
@@ -350,9 +350,9 @@
                         class="fa-solid fa-chevron-right text-gray-500 transition-transform duration-200"></i>
                 </div>
                 <div id="content-vip" class="hidden border-t border-white/5 p-5 bg-black/30">
-                    <p class="text-sm text-gray-400 mb-4">Mendapatkan daftar drama dari channel VIP/Theater.</p>
+                    <p class="text-sm text-gray-400 mb-4">Obter a lista de dramas do canal VIP/Theater.</p>
                     <button id="btn-vip" onclick="testEndpoint('vip', '/api/vip', {})" class="btn-primary btn-warning">
-                        <i class="fa-solid fa-crown"></i> Get VIP Data
+                        <i class="fa-solid fa-crown"></i> Obter dados VIP
                     </button>
                     <div id="result-header-vip"
                         class="mt-4 hidden p-4 rounded-t-xl bg-white/5 border border-white/5 text-sm"></div>
@@ -371,7 +371,7 @@
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="method-badge method-get">GET</span>
-                                <h3 class="font-semibold">Drama Terbaru</h3>
+                                <h3 class="font-semibold">Drama mais recente</h3>
                             </div>
                             <code class="text-xs text-gray-500 mt-1">/api/home</code>
                         </div>
@@ -380,23 +380,23 @@
                         class="fa-solid fa-chevron-right text-gray-500 transition-transform duration-200"></i>
                 </div>
                 <div id="content-home" class="hidden border-t border-white/5 p-5 bg-black/30">
-                    <p class="text-sm text-gray-400 mb-4">Mendapatkan daftar drama terbaru di homepage.</p>
+                    <p class="text-sm text-gray-400 mb-4">Obter a lista de dramas mais recentes na página inicial.</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div class="input-wrapper">
                             <i class="input-icon fa-solid fa-file"></i>
-                            <input type="number" id="input-home-page" value="1" placeholder="Halaman"
+                            <input type="number" id="input-home-page" value="1" placeholder="Página"
                                 class="input-modern">
                         </div>
                         <div class="input-wrapper">
                             <i class="input-icon fa-solid fa-list"></i>
-                            <input type="number" id="input-home-size" value="10" placeholder="Jumlah per halaman"
+                            <input type="number" id="input-home-size" value="10" placeholder="Número por página"
                                 class="input-modern">
                         </div>
                     </div>
                     <button id="btn-home"
                         onclick="testEndpoint('home', '/api/home', { page: document.getElementById('input-home-page').value, size: document.getElementById('input-home-size').value })"
                         class="btn-primary">
-                        <i class="fa-solid fa-paper-plane"></i> Kirim Request
+                        <i class="fa-solid fa-paper-plane"></i> Enviar solicitação
                     </button>
                     <div id="result-header-home"
                         class="mt-4 hidden p-4 rounded-t-xl bg-white/5 border border-white/5 text-sm"></div>
@@ -415,7 +415,7 @@
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="method-badge method-get">GET</span>
-                                <h3 class="font-semibold">Detail Drama</h3>
+                                <h3 class="font-semibold">Detalhes do drama</h3>
                             </div>
                             <code class="text-xs text-gray-500 mt-1">/api/detail/:bookId/v2</code>
                         </div>
@@ -424,16 +424,16 @@
                         class="fa-solid fa-chevron-right text-gray-500 transition-transform duration-200"></i>
                 </div>
                 <div id="content-detail" class="hidden border-t border-white/5 p-5 bg-black/30">
-                    <p class="text-sm text-gray-400 mb-4">Mendapatkan detail lengkap sebuah drama.</p>
+                    <p class="text-sm text-gray-400 mb-4">Obtenha detalhes completos de um drama.</p>
                     <div class="input-wrapper mb-4">
                         <i class="input-icon fa-solid fa-book"></i>
-                        <input type="text" id="input-detail-bookId" value="41000122558"
-                            placeholder="Masukkan Book ID..." class="input-modern">
+                        <input type="text" id="input-detail-bookId" value="42000000796"
+                            placeholder="Insira o ID do livro..." class="input-modern">
                     </div>
                     <button id="btn-detail"
                         onclick="testEndpoint('detail', '/api/detail/:bookId/v2', { bookId: document.getElementById('input-detail-bookId').value })"
                         class="btn-primary">
-                        <i class="fa-solid fa-paper-plane"></i> Kirim Request
+                        <i class="fa-solid fa-paper-plane"></i> Enviar solicitação
                     </button>
                     <div id="result-header-detail"
                         class="mt-4 hidden p-4 rounded-t-xl bg-white/5 border border-white/5 text-sm"></div>
@@ -452,7 +452,7 @@
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="method-badge method-get">GET</span>
-                                <h3 class="font-semibold">Daftar Chapter</h3>
+                                <h3 class="font-semibold">Lista de episódios</h3>
                             </div>
                             <code class="text-xs text-gray-500 mt-1">/api/chapters/:bookId</code>
                         </div>
@@ -461,16 +461,16 @@
                         class="fa-solid fa-chevron-right text-gray-500 transition-transform duration-200"></i>
                 </div>
                 <div id="content-chapters" class="hidden border-t border-white/5 p-5 bg-black/30">
-                    <p class="text-sm text-gray-400 mb-4">Mendapatkan daftar semua chapter/episode sebuah drama.</p>
+                    <p class="text-sm text-gray-400 mb-4">Obter a lista de todos os capítulos/episódios de um drama.</p>
                     <div class="input-wrapper mb-4">
                         <i class="input-icon fa-solid fa-book"></i>
-                        <input type="text" id="input-chapters-bookId" value="41000122558"
-                            placeholder="Masukkan Book ID..." class="input-modern">
+                        <input type="text" id="input-chapters-bookId" value="42000000796"
+                            placeholder="Insira o ID do livro..." class="input-modern">
                     </div>
                     <button id="btn-chapters"
                         onclick="testEndpoint('chapters', '/api/chapters/:bookId', { bookId: document.getElementById('input-chapters-bookId').value })"
                         class="btn-primary">
-                        <i class="fa-solid fa-paper-plane"></i> Kirim Request
+                        <i class="fa-solid fa-paper-plane"></i> Enviar solicitação
                     </button>
                     <div id="result-header-chapters"
                         class="mt-4 hidden p-4 rounded-t-xl bg-white/5 border border-white/5 text-sm"></div>
@@ -490,7 +490,7 @@
                             <div class="flex items-center gap-2">
                                 <span class="method-badge"
                                     style="background: rgba(34, 197, 94, 0.15); color: #4ade80;">GET</span>
-                                <h3 class="font-semibold text-green-400">Stream URL</h3>
+                                <h3 class="font-semibold text-green-400">URL de Stream</h3>
                             </div>
                             <code class="text-xs text-gray-500 mt-1">/api/stream</code>
                         </div>
@@ -499,24 +499,24 @@
                         class="fa-solid fa-chevron-right text-gray-500 transition-transform duration-200"></i>
                 </div>
                 <div id="content-stream" class="hidden border-t border-white/5 p-5 bg-black/30">
-                    <p class="text-sm text-gray-400 mb-4">Mendapatkan link streaming (m3u8/mp4) untuk episode tertentu.
+                    <p class="text-sm text-gray-400 mb-4">Obter link de streaming (m3u8/mp4) para um episódio específico.
                     </p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div class="input-wrapper">
                             <i class="input-icon fa-solid fa-book"></i>
-                            <input type="text" id="input-stream-bookId" value="41000122558"
-                                placeholder="Masukkan Book ID..." class="input-modern">
+                            <input type="text" id="input-stream-bookId" value="42000000796"
+                                placeholder="Insira o ID do livro..." class="input-modern">
                         </div>
                         <div class="input-wrapper">
                             <i class="input-icon fa-solid fa-tv"></i>
-                            <input type="number" id="input-stream-episode" value="1" placeholder="Episode"
+                            <input type="number" id="input-stream-episode" value="1" placeholder="Episódio"
                                 class="input-modern">
                         </div>
                     </div>
                     <button id="btn-stream"
                         onclick="testEndpoint('stream', '/api/stream', { bookId: document.getElementById('input-stream-bookId').value, episode: document.getElementById('input-stream-episode').value })"
                         class="btn-primary btn-success">
-                        <i class="fa-solid fa-play"></i> Get Stream URL
+                        <i class="fa-solid fa-play"></i> Obter URL do stream
                     </button>
                     <div id="result-header-stream"
                         class="mt-4 hidden p-4 rounded-t-xl bg-white/5 border border-white/5 text-sm"></div>
@@ -536,7 +536,7 @@
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="method-badge method-get">GET</span>
-                                <h3 class="font-semibold">Daftar Kategori</h3>
+                                <h3 class="font-semibold">Lista de categorias</h3>
                             </div>
                             <code class="text-xs text-gray-500 mt-1">/api/categories</code>
                         </div>
@@ -545,10 +545,10 @@
                         class="fa-solid fa-chevron-right text-gray-500 transition-transform duration-200"></i>
                 </div>
                 <div id="content-categories" class="hidden border-t border-white/5 p-5 bg-black/30">
-                    <p class="text-sm text-gray-400 mb-4">Mendapatkan daftar semua kategori drama.</p>
+                    <p class="text-sm text-gray-400 mb-4">Obter a lista de todas as categorias de dramas.</p>
                     <button id="btn-categories" onclick="testEndpoint('categories', '/api/categories', {})"
                         class="btn-primary">
-                        <i class="fa-solid fa-paper-plane"></i> Kirim Request
+                        <i class="fa-solid fa-paper-plane"></i> Enviar solicitação
                     </button>
                     <div id="result-header-categories"
                         class="mt-4 hidden p-4 rounded-t-xl bg-white/5 border border-white/5 text-sm"></div>
@@ -567,7 +567,7 @@
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="method-badge method-get">GET</span>
-                                <h3 class="font-semibold">Drama per Kategori</h3>
+                                <h3 class="font-semibold">Dramas por categoria</h3>
                             </div>
                             <code class="text-xs text-gray-500 mt-1">/api/category/:id</code>
                         </div>
@@ -576,28 +576,28 @@
                         class="fa-solid fa-chevron-right text-gray-500 transition-transform duration-200"></i>
                 </div>
                 <div id="content-category" class="hidden border-t border-white/5 p-5 bg-black/30">
-                    <p class="text-sm text-gray-400 mb-4">Mendapatkan drama berdasarkan kategori tertentu.</p>
+                    <p class="text-sm text-gray-400 mb-4">Obter drama com base em uma categoria específica.</p>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div class="input-wrapper">
                             <i class="input-icon fa-solid fa-hashtag"></i>
-                            <input type="number" id="input-category-id" value="449" placeholder="Category ID"
+                            <input type="number" id="input-category-id" value="449" placeholder="ID da categoria"
                                 class="input-modern">
                         </div>
                         <div class="input-wrapper">
                             <i class="input-icon fa-solid fa-file"></i>
-                            <input type="number" id="input-category-page" value="1" placeholder="Halaman"
+                            <input type="number" id="input-category-page" value="1" placeholder="Página"
                                 class="input-modern">
                         </div>
                         <div class="input-wrapper">
                             <i class="input-icon fa-solid fa-list"></i>
-                            <input type="number" id="input-category-size" value="10" placeholder="Per halaman"
+                            <input type="number" id="input-category-size" value="10" placeholder="Por página"
                                 class="input-modern">
                         </div>
                     </div>
                     <button id="btn-category"
                         onclick="testEndpoint('category', '/api/category/:id', { id: document.getElementById('input-category-id').value, page: document.getElementById('input-category-page').value, size: document.getElementById('input-category-size').value })"
                         class="btn-primary">
-                        <i class="fa-solid fa-paper-plane"></i> Kirim Request
+                        <i class="fa-solid fa-paper-plane"></i> Enviar solicitação
                     </button>
                     <div id="result-header-category"
                         class="mt-4 hidden p-4 rounded-t-xl bg-white/5 border border-white/5 text-sm"></div>
@@ -617,7 +617,7 @@
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="method-badge method-get">GET</span>
-                                <h3 class="font-semibold">Rekomendasi</h3>
+                                <h3 class="font-semibold">Recomendação</h3>
                             </div>
                             <code class="text-xs text-gray-500 mt-1">/api/recommend</code>
                         </div>
@@ -626,10 +626,10 @@
                         class="fa-solid fa-chevron-right text-gray-500 transition-transform duration-200"></i>
                 </div>
                 <div id="content-recommend" class="hidden border-t border-white/5 p-5 bg-black/30">
-                    <p class="text-sm text-gray-400 mb-4">Mendapatkan daftar drama rekomendasi.</p>
+                    <p class="text-sm text-gray-400 mb-4">Obter a lista de dramas recomendados.</p>
                     <button id="btn-recommend" onclick="testEndpoint('recommend', '/api/recommend', {})"
                         class="btn-primary">
-                        <i class="fa-solid fa-paper-plane"></i> Kirim Request
+                        <i class="fa-solid fa-paper-plane"></i> Enviar solicitação
                     </button>
                     <div id="result-header-recommend"
                         class="mt-4 hidden p-4 rounded-t-xl bg-white/5 border border-white/5 text-sm"></div>
@@ -645,19 +645,19 @@
     <footer class="border-t border-white/5 py-8 mt-16">
         <div class="max-w-6xl mx-auto px-6 text-center">
             <p class="text-gray-500 text-sm mb-2">Dramabox API v1.1.0</p>
-            <p class="text-gray-600 text-xs mb-4">Developed by <span class="text-blue-400 font-medium">Handoko x Mari
+            <p class="text-gray-600 text-xs mb-4">Desenvolvido por <span class="text-blue-400 font-medium">Handoko x Mari
                     Partner</span></p>
             <a href="https://api.whatsapp.com/send/?phone=6287780081554&text&type=phone_number&app_absent=0"
                 target="_blank"
                 class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-sm hover:bg-green-500/20 transition">
-                <i class="fa-brands fa-whatsapp"></i> Hubungi Kami
+                <i class="fa-brands fa-whatsapp"></i> Contate-nos
             </a>
         </div>
     </footer>
 
     <script>
         const baseUrl = window.location.origin;
-        const currentLang = 'in';
+        const currentLang = 'pt';
 
         function initializePage() {
             const baseUrlDisplay = document.getElementById('baseUrlDisplay');
@@ -687,7 +687,7 @@
 
             if (error) {
                 header.innerHTML = `<div class="flex justify-between items-center">
-                    <span class="text-red-400 font-semibold"><i class="fa-solid fa-times-circle mr-2"></i>Error</span>
+                    <span class="text-red-400 font-semibold"><i class="fa-solid fa-times-circle mr-2"></i>Erro</span>
                     <span class="text-gray-500 text-xs">${timeMs.toFixed(0)}ms</span>
                 </div>`;
                 content.textContent = formatJson({ error });
@@ -695,13 +695,13 @@
             } else {
                 lastResponseData[id] = data;
                 header.innerHTML = `<div class="flex justify-between items-center">
-                    <span class="text-green-400 font-semibold"><i class="fa-solid fa-check-circle mr-2"></i>Success</span>
+                    <span class="text-green-400 font-semibold"><i class="fa-solid fa-check-circle mr-2"></i>Sucesso</span>
                     <div class="flex items-center gap-2">
                         <span class="text-gray-500 text-xs">${timeMs.toFixed(0)}ms</span>
-                        <button onclick="copyResponse('${id}')" class="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs flex items-center gap-1 transition" title="Copy">
-                            <i class="fa-solid fa-copy"></i> Copy
+                        <button onclick="copyResponse('${id}')" class="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs flex items-center gap-1 transition" title="Copiar">
+                            <i class="fa-solid fa-copy"></i> Copiar
                         </button>
-                        <button onclick="downloadResponse('${id}')" class="px-3 py-1 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 text-xs flex items-center gap-1 transition" title="Download">
+                        <button onclick="downloadResponse('${id}')" class="px-3 py-1 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 text-xs flex items-center gap-1 transition" title="Baixar">
                             <i class="fa-solid fa-download"></i> TXT
                         </button>
                     </div>
@@ -715,9 +715,9 @@
             if (!data) return;
             const text = JSON.stringify(data, null, 2);
             navigator.clipboard.writeText(text).then(() => {
-                showToast('Berhasil disalin ke clipboard!');
+                showToast('Copiado com sucesso para a área de transferência!');
             }).catch(() => {
-                showToast('Gagal menyalin', true);
+                showToast('Falha ao copiar', true);
             });
         }
 
@@ -734,7 +734,7 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            showToast('File berhasil diunduh!');
+            showToast('Arquivo baixado com sucesso!');
         }
 
         function showToast(message, isError = false) {
@@ -758,7 +758,7 @@
             if (btn) btn.disabled = true;
             header.classList.remove('hidden');
             content.classList.add('hidden');
-            header.innerHTML = '<span class="text-blue-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Loading...</span>';
+            header.innerHTML = '<span class="text-blue-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Carregando...</span>';
 
             const start = performance.now();
             let url = baseUrl + path;
